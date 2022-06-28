@@ -1,6 +1,6 @@
 CREATE TABLE medicos (
 	matricula INT,
-	nombre VARCHAR(100),
+	nombre VARCHAR(50),
 	apellido VARCHAR(100),
 	activo INT,
 	sexo CHAR,
@@ -24,7 +24,7 @@ go
 
 create table estudios (
 	idestudio int,
-	estuido varchar(100),
+	estudio varchar(100),
 	activo int,
 	constraint pk_estudios primary key (idestudio)
 )
@@ -51,7 +51,7 @@ go
 create table precios (
 	idestudio int,
 	idinstituto int,
-	precio float,
+	precio decimal(10,2),
 	constraint fk_precios_institutos foreign key (idinstituto) references institutos,
 	constraint fk_precios_estudios foreign key (idestudio) references estudios,
 	constraint pk_precios primary key (idestudio, idinstituto)
@@ -60,7 +60,7 @@ go
 
 create table ooss (
 	sigla varchar(10),
-	nombre varchar(100),
+	nombre varchar(50),
 	categoria varchar(50)
 	constraint pk_ooss primary key (sigla)
 )
@@ -69,7 +69,7 @@ go
 create table planes(
 	sigla varchar(10),
 	nroplan int,
-	nombre varchar(100),
+	nombre varchar(50),
 	activo int,
 	constraint pk_planes primary key(sigla, nroplan),
 	constraint fk_planes_ooss foreign key (sigla) references ooss,
