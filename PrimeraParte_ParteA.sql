@@ -3,7 +3,8 @@ create table Albumes (
 	titulo varchar(200),
 	fecha date,
 	codArtista int,
-	codGenero int
+	codGenero int,
+	constraint pk_Albumes primary key (codAlbum)
 )
 
 insert into Albumes (codAlbum, titulo, fecha, codArtista, codGenero) VALUES (1,'Future Nostalgia', '27/03/2020', 1, 1)
@@ -12,7 +13,8 @@ insert into Albumes (codAlbum, titulo, fecha, codArtista, codGenero) VALUES (3,'
 
 create table Artista(
 	codArtista int,
-	nombre varchar(100)
+	nombre varchar(100),
+	constraint pk_Artista primary key (codArtista)
 )
 
 insert into Artista (codArtista, nombre) VALUES (1, 'Dua Lipa')
@@ -21,7 +23,8 @@ insert into Artista (codArtista, nombre) VALUES (3, 'YSY A')
 
 create table Generos(
 	codGenero int,
-	descripcion varchar(200)
+	descripcion varchar(200),
+	constraint pk_Generos primary key (codGenero)
 )
 
 insert into Generos (codGenero, descripcion) VALUES (1, 'POP')
@@ -31,7 +34,8 @@ create table Temas(
 	codTema int,
 	titulo varchar(100),
 	duracion float,
-	codAlbum int
+	codAlbum int,
+	constraint pk_Temas primary key (codTema)
 )
 
 insert into Temas (codTema, titulo,duracion,codAlbum) VALUES (1, 'Future Nostalgia', 3.04, 1)
@@ -49,7 +53,8 @@ insert into Temas (codTema, titulo,duracion,codAlbum) VALUES (8, 'INSPIRACION DI
 create table Cliente (
 	codCliente int,
 	nombre varchar(100),
-	saldo float
+	saldo float,
+	constraint pk_Cliente primary key (codCliente)
 )
 
 insert into Cliente (codCliente, nombre, saldo) VALUES (01, 'Jose Luis', 87.40)
@@ -62,7 +67,8 @@ create table Pedidos (
 	fecha date,
 	codCliente int,
 	fechaEntrega date,
-	lugarEntrega varchar(200)
+	lugarEntrega varchar(200),
+	constraint pk_Pedidos primary key (nroPedido)
 )
 
 insert into Pedidos (nroPedido, fecha, codCliente,fechaEntrega,lugarEntrega) VALUES (11, '28/06/2022', 01, '01/07/2022', 'Bernardo de Irigoyen 924')
@@ -77,7 +83,8 @@ create table Facturas (
 	bruto float,
 	iva float,
 	IIBB float,
-	final float
+	final float,
+	constraint pk_Facturas primary key (nroFactura)
 )
 
 insert into Facturas (nroFactura, fecha, codCliente,codPedido,bruto,iva,IIBB,final) VALUES (95, '28/06/2022', 01, 11,250.00,10.0,0.0,275.0)
@@ -89,7 +96,8 @@ create table Productos (
 	descripcion varchar(200),
 	stock int,
 	puntoReposicion int,
-	precio float
+	precio float,
+	constraint pk_Productos primary key (codProducto)
 )
 
 insert into Productos (codProducto, descripcion, stock,puntoReposicion,precio) VALUES (01, 'Walkman', 15, 5,250.00)
@@ -100,6 +108,8 @@ create table ItemsPedido (
 	codProducto int,
 	codPedido int,
 	cantidad int
+	constraint fk_ItemsPedido_Productos foreign key (codProducto) references Productos,
+	constraint fk_ItemsPedido_Pedido foreign key (codPedido) references Pedidos
 )
 
 insert into ItemsPedido (codProducto, codPedido, cantidad) VALUES (01, 11, 1)
@@ -111,7 +121,9 @@ create table ItemsFactura(
 	nroFactura int,
 	cantidad int,
 	precio float,
-	descuento float
+	descuento float,
+	constraint fk_ItemsFactura_Productos foreign key (codProducto) references Productos,
+	constraint fk_ItemsFactura_Factura foreign key (nroFactura) references Facturas
 )
 
 insert into ItemsFactura (codProducto, nroFactura, cantidad, precio, descuento) VALUES (01, 95, 1,275,0)
